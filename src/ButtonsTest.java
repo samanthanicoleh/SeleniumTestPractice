@@ -4,18 +4,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 /**
- * Testing the page 'Autocomplete' on Formy
+ * Testing the page 'Buttons' on Formy
  */
 
-public class AutocompleteTest {
+public class ButtonsTest {
 
     String driverLocation = HomeTest.driverLocation;
     String driverType = HomeTest.driverType;
@@ -29,23 +29,23 @@ public class AutocompleteTest {
         options.setBinary(firefoxBinary);
         options.setHeadless(true);
         driver = new FirefoxDriver();
-        driver.get("https://formy-project.herokuapp.com/autocomplete");
+        driver.get("https://formy-project.herokuapp.com/buttons");
     }
 
     @Test
-    void testCorrectTitle() {
-        String actualTitle = driver.findElement(By.xpath("/html/body/div[1]/h1")).getText();
-        String expectedTitle = "Autocomplete";
-        Assert.assertEquals(actualTitle, expectedTitle);
+    void testCorrectNumberOfButtons() {
+        List<WebElement> elemsCount = driver.findElements(By.tagName("button"));
+        int actualNumber = elemsCount.size();
+        int expectedNumber = 13;
+        Assert.assertEquals(actualNumber, expectedNumber);
     }
 
     @Test
-    void testAddressAutocomplete() {
-        // sending text to text field
-        driver.findElement(By.id("autocomplete")).sendKeys("1600 Amphitheatre Parkway, Mountain View");
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement autocompleteResult = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("pac-item")));
-        autocompleteResult.click();
+    void testDropdownButton() {
+        driver.findElement(By.id("btnGroupDrop1")).click();
+        String actualText = driver.findElement(By.cssSelector("div.show:nth-child(2) > a:nth-child(1)")).getText();
+        String expectedText = "Dropdown link 1";
+        Assert.assertEquals(actualText, expectedText);
     }
 
     @AfterTest

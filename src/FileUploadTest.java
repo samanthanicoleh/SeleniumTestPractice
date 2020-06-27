@@ -1,21 +1,18 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- * Testing the page 'Autocomplete' on Formy
+ * Testing the page 'File Upload' on Formy
  */
 
-public class AutocompleteTest {
+public class FileUploadTest {
 
     String driverLocation = HomeTest.driverLocation;
     String driverType = HomeTest.driverType;
@@ -29,23 +26,26 @@ public class AutocompleteTest {
         options.setBinary(firefoxBinary);
         options.setHeadless(true);
         driver = new FirefoxDriver();
-        driver.get("https://formy-project.herokuapp.com/autocomplete");
+        driver.get("https://formy-project.herokuapp.com/fileupload");
     }
 
     @Test
     void testCorrectTitle() {
         String actualTitle = driver.findElement(By.xpath("/html/body/div[1]/h1")).getText();
-        String expectedTitle = "Autocomplete";
+        String expectedTitle = "File upload";
         Assert.assertEquals(actualTitle, expectedTitle);
     }
 
     @Test
-    void testAddressAutocomplete() {
-        // sending text to text field
-        driver.findElement(By.id("autocomplete")).sendKeys("1600 Amphitheatre Parkway, Mountain View");
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement autocompleteResult = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("pac-item")));
-        autocompleteResult.click();
+    void testFileUpload() {
+        driver.findElement(By.id("file-upload-field")).sendKeys("filetoupload.jpg");
+    }
+
+    @Test
+    void testResetButton() {
+        driver.findElement(By.className("btn-warning")).click();
+        String uploadTextField = driver.findElement(By.id("file-upload-field")).getText();
+        Assert.assertEquals(uploadTextField, "");
     }
 
     @AfterTest

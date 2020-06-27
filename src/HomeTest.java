@@ -1,13 +1,19 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
+
+/**
+ * Testing the 'Home' page on Formy
+ */
 
 public class HomeTest {
 
@@ -19,7 +25,11 @@ public class HomeTest {
     @BeforeTest
     void setup() {
         System.setProperty(driverType, driverLocation);
-        driver = new FirefoxDriver();
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setBinary(firefoxBinary);
+        options.setHeadless(true);
+        driver = new FirefoxDriver(options);
         driver.get("https://formy-project.herokuapp.com/");
     }
 
@@ -59,6 +69,6 @@ public class HomeTest {
 
     @AfterTest
     void closeDriver() {
-        driver.close();
+        driver.quit();
     }
 }

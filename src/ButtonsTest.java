@@ -1,9 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -17,19 +14,11 @@ import java.util.List;
 
 public class ButtonsTest {
 
-    String driverLocation = HomeTest.driverLocation;
-    String driverType = HomeTest.driverType;
     WebDriver driver;
 
     @BeforeTest
     void setup() {
-        System.setProperty(driverType, driverLocation);
-        FirefoxBinary firefoxBinary = new FirefoxBinary();
-        FirefoxOptions options = new FirefoxOptions();
-        options.setBinary(firefoxBinary);
-        options.setHeadless(true);
-        driver = new FirefoxDriver();
-        driver.get("https://formy-project.herokuapp.com/buttons");
+        driver = GlobalInit.setupDriver("https://formy-project.herokuapp.com/buttons");
     }
 
     @Test

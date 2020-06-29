@@ -1,3 +1,4 @@
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,7 +30,7 @@ public class SwitchWindowTest {
 
     @Test
     void testNewTabOpens() {
-        driver.findElement(By.id("new-tab-button")).click();
+        driver.findElement(By.id("new-tab-button")).click(); // click button to open new tab
 
         String firstHandle = driver.getWindowHandle();
 
@@ -43,7 +44,15 @@ public class SwitchWindowTest {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
         String actualNewTitle = driver.findElement(By.tagName("h1")).getText();
         Assert.assertEquals(actualNewTitle, "Switch Window");
+    }
 
+    @Test
+    void testAlertOpens() {
+        driver.findElement(By.id("alert-button")).click(); // click alert button
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+        String actualNewTitle = driver.findElement(By.tagName("h1")).getText();
+        Assert.assertEquals(actualNewTitle,"Switch Window");
     }
 
     @AfterTest
